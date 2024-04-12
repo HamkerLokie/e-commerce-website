@@ -1,7 +1,19 @@
 import { useEffect, useState } from 'react'
 import { VscError } from 'react-icons/vsc'
+import CartItem from '../components/cart-items'
+import { Link } from 'react-router-dom'
 
-const cartItems = []
+const cartItems = [
+  {
+    productId: 'dfjbf',
+    photo:
+      'https://www.reliancedigital.in/medias/Apple-MGN63HNA-Laptops-491946461-i-1-1200Wx1200H?context=bWFzdGVyfGltYWdlc3wxNzczNDJ8aW1hZ2UvanBlZ3xpbWFnZXMvaDVhL2gyZC85NDQzMDgzNTgzNTE4LmpwZ3xhYzRiNWIxZGQ2NjNiNWIyYjI0Y2ZkYTZlZWQ3MTFjZTMxYzVmNDBiNmM5Mzk5OTM2OGVkZmExMjMyYjIxNDQ4',
+    name: 'MacBook',
+    price: 3000,
+    quantity: 4,
+    stock: 10
+  }
+]
 const subTotal = 8451
 const tax = Math.round(subTotal * 0.018)
 const shipping = 200
@@ -27,9 +39,13 @@ const Cart = () => {
   return (
     <div className='cart'>
       <main>
-        {/* {cartItems.map((item) => {
-      <></>
-    })} */}
+        {cartItems.length > 0 ? (
+          cartItems.map((item, index) => (
+            <CartItem key={index} cartItem={item} />
+          ))
+        ) : (
+          <h1>No Items Added</h1>
+        )}
       </main>
       <aside>
         <p>SubTotal: Rs{subTotal}</p>
@@ -56,6 +72,8 @@ const Cart = () => {
               <VscError /> Invalid Coupon Code
             </span>
           ))}
+
+        {cartItems.length > 0 && <Link to={`/shipping`}>Checkout</Link>}
       </aside>
     </div>
   )
